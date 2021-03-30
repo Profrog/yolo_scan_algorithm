@@ -1,5 +1,8 @@
-# yolo_scan_algorithm
 
+* camera.py : webcam control python code
+
+
+# yolo_scan_algorithm
 
 # 구현 순서
 
