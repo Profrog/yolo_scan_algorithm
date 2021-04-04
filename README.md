@@ -1,5 +1,6 @@
 
 * camera.py : webcam control python code
+* yolo_webcam.py : in darket it can realtime-yolo-detecting
 
 
 # yolo_scan_algorithm
