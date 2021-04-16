@@ -2,7 +2,7 @@
 * camera.py : webcam control python code
 * yolo_webcam.py : in darket it can realtime-yolo-detecting
 * rosyolo : yolo 데이터 값을 ros2에 올린다.
-*  
+* convert.py : .txt 로깅 데이터 추출용 
 
 # yolo_scan_algorithm
 
