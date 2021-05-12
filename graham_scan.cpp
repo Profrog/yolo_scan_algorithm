@@ -64,6 +64,7 @@ void algorithm()
 	cout << "M값 입력 (0,0) ~ (M,M) " << endl;
 	cin >> M;
 	cout << "좌표영역은 0,0 에서 " << M << "," << M << "까지" << endl;
+	cout << endl;
 
 
 
