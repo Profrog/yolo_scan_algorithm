@@ -1,8 +1,14 @@
 
-* camera.py : webcam control python code
+* camera.py : 파이썬 웹캠 제어(바코드 인식 가능)
+* camera1.py : camera.py의 가벼운 버전(웹캠 제어만 가능)
+* convert.py : gnss 장비 파싱 프로그램
+* gnss_convert.py : convert.py의 가벼운 버전
+* graham_scan(matplot + bresenham).py : grahamscan으로 얻어낸 점의 좌표를 채우는 것 까지 가능한 파일
+* graham_scan(matplot).py : 랜덤한 크기와 개수를 이용하여 grahamscan 알고리즘 검증용 파일
+* graham_scan.py : graham scan으로 점의 좌표만 얻애내는 파일(가벼운 버전)
 * yolo_webcam.py : in darket it can realtime-yolo-detecting
 * rosyolo : yolo 데이터 값을 ros2에 올린다.
-* convert.py : .txt 로깅 데이터 추출용 
+* yolo_webcam.py : 웹캠으로 얻어낸 실시간 이미지를 yolo로 검출하여 그 결과 값을 보여준다
 
 # yolo_scan_algorithm
 
