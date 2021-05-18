@@ -33,5 +33,6 @@ while i <= n:
     
   except:
      print("error " + str1)
+     i -= 1
    
 f.close()
