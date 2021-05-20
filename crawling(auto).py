@@ -21,9 +21,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 
-global time_limit
-time_limit = 15
-socket.setdefaulttimeout(time_limit)
+#global time_limit
+#time_limit = 15
+#socket.setdefaulttimeout(time_limit)
 
 
 global n #num of case
