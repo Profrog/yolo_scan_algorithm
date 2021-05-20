@@ -11,6 +11,8 @@
 * yolo_webcam.py : 웹캠으로 얻어낸 실시간 이미지를 yolo로 검출하여 그 결과 값을 보여준다
 * crawling.py : .txt의 내용들을 크롤링 하여 이미지로 저장
 * crawling(auto).py : crawling. update 버전
+* sir2020_serial.py : sir2020값을 .txt로 로깅 
+* sir2020_map.py : .txt로 로깅된 sir2020값을 matplot형태로 보여줌
 
 # yolo_scan_algorithm
 
