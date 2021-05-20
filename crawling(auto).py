@@ -72,13 +72,13 @@ while i <= n:
       if i > n:
        break
     
-      if line.find(".jpg")== -1:
+      if line.find('.jpg"')== -1:
        continue
      
       else:  
-       a = line.find(".jpg") + 5
-       b = line.find("h")
-       str0 = line[b-1:a]
+       a = line.find('.jpg"') + 5
+       b = line.find('"h')
+       str0 = line[b:a]
        str1 = str0[1:len(str0) -1]
        #print(str1)
        data3.write(str1 + "\n")
