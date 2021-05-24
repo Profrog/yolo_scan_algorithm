@@ -5,6 +5,7 @@ import urllib.request
 import urllib
 import socket
 import shutil
+from os import system,chdir
 
 import time
 import selenium
@@ -21,9 +22,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 
-#global time_limit
-#time_limit = 15
-#socket.setdefaulttimeout(time_limit)
+global time_limit
+time_limit = 15
+socket.setdefaulttimeout(time_limit)
 
 
 global n #num of case
@@ -35,14 +36,20 @@ url0 = "https://www.google.co.kr/imghp?hl=ko&ogbl"
 global file_name
 file_name = 't_image'
 
+global image_name
+image_name = "road_w_aa"
+
+
+
+print("검색할 커맨드를 입력하시오")
+
+search1 = input()
+
 if os.path.exists(file_name):
  shutil.rmtree(file_name) 
 
 os.makedirs(file_name)
 
-
-print("검색할 커맨드를 입력하시오")
-search1 = input()
 
 data2 = open('crol_box.txt' , 'w+') #web code
 driver = webdriver.Chrome()
@@ -82,8 +89,8 @@ while i <= n:
        str1 = str0[1:len(str0) -1]
        #print(str1)
        data3.write(str1 + "\n")
-       urllib.request.urlretrieve(str1, file_name + "/test" + str(i) + '.jpg')
-       train0.write(file_name + str(i) + '.jpg' + "\n")  
+       urllib.request.urlretrieve(str1, file_name + "/" + image_name + str(i) + '.jpg')
+       train0.write(file_name + "/test" + str(i) + '.jpg' + "\n")  
        i+=1
            
      except:
@@ -105,3 +112,10 @@ while i <= n:
 
 data3.close()
 train0.close()
+chdir('labelImg')
+os.system('python3 labelImg.py')
+
+
+
+
+
