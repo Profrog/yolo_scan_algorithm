@@ -14,6 +14,7 @@
 * sir2020_serial.py : sir2020값을 .txt로 로깅 
 * sir2020_map.py : .txt로 로깅된 sir2020값을 matplot형태로 보여줌
 * coco_divide.py : image + annotation(yolo) 기준에서 특정 라벨을 가진 이미지만 추출
+* label_match.py : annotaion이 있는 이미지만 save 해주는 코드
 
 # yolo_scan_algorithm
 
