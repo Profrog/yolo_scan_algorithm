@@ -15,6 +15,7 @@
 * sir2020_map.py : .txt로 로깅된 sir2020값을 matplot형태로 보여줌
 * coco_divide.py : image + annotation(yolo) 기준에서 특정 라벨을 가진 이미지만 추출
 * label_match.py : annotaion이 있는 이미지만 save 해주는 코드
+* pluslabel.py : 데이터셋에서 다른 weights에 있는 label 중 해당 names와 일치하는 것들은 추가 라벨링을 해주는 프로그램
 
 # yolo_scan_algorithm
 
