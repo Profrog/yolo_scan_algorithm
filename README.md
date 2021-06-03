@@ -17,6 +17,7 @@
 * label_match.py : annotaion이 있는 이미지만 save 해주는 코드
 * pluslabel.py : 데이터셋에서 다른 weights에 있는 label 중 해당 names와 일치하는 것들은 추가 라벨링을 해주는 프로그램
 * train_txt.py : 해당 파일의 이미지 경로(.jpg)를 모아 train.txt를 만들어준다
+* precision.py : 해당 묶음의 dataset에 있는 사진들을 yolo를 돌려 class 별 검출률을 조사한다.
 
 # yolo_scan_algorithm
 
