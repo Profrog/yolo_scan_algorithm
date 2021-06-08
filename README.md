@@ -20,7 +20,7 @@
 * precision.py : 해당 묶음의 dataset에 있는 사진들을 yolo를 돌려 class 별 검출률을 조사한다.
 * serial.py : serial 값을 받는 python 코드
 * chanage_label.py : data set의 yolo annotation label 번호를 수정하는 코드
-*  : 영상에서 n장의 사진을 추출해 내는 코드
+* extract_image.py : 영상에서 n장의 사진을 추출해 내는 코드
 
 # yolo_scan_algorithm
 
