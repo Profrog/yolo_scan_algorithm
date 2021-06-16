@@ -22,6 +22,7 @@
 * chanage_label.py : data set의 yolo annotation label 번호를 수정하는 코드
 * extract_image.py : 영상에서 n장의 사진을 추출해 내는 코드
 * precision2.py : class 별 검출률 조사 + 검출 표시 iamge를 다른 폴더에 저장한다
+* confi_chart.py : class 별 confidence를 excel로 변환하여 chart로 나타낼 수 있도록 해준다
 
 # yolo_scan_algorithm
 
