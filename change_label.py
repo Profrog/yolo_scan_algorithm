@@ -68,12 +68,12 @@ print ("file_list: {}".format(file_list_py))
 for test1 in file_list_py:
   with open(path + test1) as file:
    if True:
+    label_dir = path + test1
     wr1 = open(search1 + "/" + test1, 'w+')
     for line in file.readlines():
      label_line = line.split(" ")
      if str(label_line[0]) == str(o1):
       search_num += 1
-      label_dir = path + test1
       wr1_sen = line
       wr1_sen = wr1_sen.replace(str(o1),str(n1))
       wr1.write(wr1_sen)
