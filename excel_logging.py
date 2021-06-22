@@ -68,12 +68,12 @@ try:
     
       if data_list[0] == config_x:
        x_offset = float(data_list[1])
-       x_offset0 = x_offset
+       x_offset0 = 0
        print("x_offset " + str(x_offset)) 
      
       elif data_list[0] == config_y: 
        y_offset = float(data_list[1])
-       y_offset0 = y_offset
+       y_offset0 = 0
        print("y_offset " + str(y_offset))
 
 except:
@@ -125,28 +125,60 @@ try:
       data_list = line.split(',')
       x_op = float(data_list[0])
       y_op = float(data_list[1])
-      s_limit = float(data_list[2])      
-      sum_d += math.sqrt(math.pow(x_op - x_offset0 , 2) + math.pow(y_op - y_offset0 , 2))  
+      s_limit = float(data_list[2]) 
+      
+      if x_offset0 == 0:
+       x_offset0 = x_op
+      
+      if y_offset0 == 0:
+       y_offset0 = y_op
+                 
+      sum_d += math.sqrt(math.pow(x_op - x_offset0 , 2) + math.pow(y_op - y_offset0 , 2))
+      
+      x_vector = x_op - x_offset0
+      y_vector = y_op - y_offset0  
+        
       x_offset0 = x_op
       y_offset0 = y_op
       
-      if label_cross + 1 < len(cross1):
+      
+      if label_cross + 1 < len(cross1) and (x_vector * (cross1[label_cross+1][0] - cross1[label_cross][0]))*(y_vector * (cross1[label_cross+1][1] - cross1[label_cross][1])) >= 0:
        while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross+1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross+1][1] + y_offset) , 2)):
          label_cross += 1
+         
+       if label_cross + 1 < len(cross1):  
+         if (x_op - (cross1[label_cross][0] + x_offset))*(cross1[label_cross+1][0] - cross1[label_cross][0]) >= 0 and (y_op - (cross1[label_cross][1] + y_offset))*(cross1[label_cross+1][1] - cross1[label_cross][1]) >= 0:
+          label_cross += 1
 
 
-      if label_cross - 1 >= 0:
+      if label_cross - 1 >= 0 and (x_vector * (cross1[label_cross-1][0] - cross1[label_cross][0]))*(y_vector * (cross1[label_cross-1][1] - cross1[label_cross][1])) > 0:
        while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross-1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross-1][1] + y_offset) , 2)):
-         label_cross -= 1         
-                  
-      if label_station + 1 < len(station1):
+         label_cross -= 1 
+         
+       if label_cross - 1 >= 0:  
+         if (x_op - (cross1[label_cross][0] + x_offset))*(cross1[label_cross-1][0] - cross1[label_cross][0]) >= 0 and (y_op - (cross1[label_cross][1] + y_offset))*(cross1[label_cross-1][1] - cross1[label_cross][1]) >= 0:
+          label_cross -= 1
+         
+         
+         
+                               
+      if label_station + 1 < len(station1) and (x_vector * (station1[label_station+1][0] - station1[label_station][0]))*(y_vector * (station1[label_station+1][1] - station1[label_station][1])) >= 0:
        while math.sqrt(math.pow(x_op - ( station1[label_station][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station+1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station+1][1] + y_offset), 2)):
          label_station += 1
          
+       if label_station + 1 < len(station1):  
+         if (x_op - (station1[label_station][0] + x_offset))*(station1[label_station+1][0] - station1[label_station][0]) >= 0 and (y_op - (station1[label_station][1] + y_offset))*(station1[label_station+1][1] - station1[label_station][1]) >= 0:
+          label_station += 1
+
+                      
          
-      if label_station - 1 >= 0:
-       while math.sqrt(math.pow(x_op - ( station1[label_station][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station-1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station-1][1] + y_offset), 2)):
-         label_station -= 1        
+      if label_station - 1 >= 0 and (x_vector * (station1[label_station-1][0] - station1[label_station][0]))*(y_vector * (station1[label_station-1][1] - station1[label_station][1])) > 0:
+       while math.sqrt(math.pow(x_op - (station1[label_station][0] + x_offset), 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station-1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station-1][1] + y_offset), 2)):
+         label_station -= 1
+         
+       if label_station - 1 >= 0:  
+         if (x_op - (station1[label_station][0] + x_offset))*(station1[label_station-1][0] - station1[label_station][0]) >= 0 and (y_op - (station1[label_station][1] + y_offset))*(station1[label_station-1][1] - station1[label_station][1]) >= 0:
+          label_station -= 1          
          
                     
       data_e = label_cross + 1
