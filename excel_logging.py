@@ -109,14 +109,14 @@ try:
     
 except:
  print("error in " + df3_txt)
- 
- 
- 
+  
 print("Station size is " + str(len(station1)))
+
  
  
 
 m_txt = open(make_txt, 'w+')
+m_txt2 = open("test_module.txt", 'w+')
 
 try:
  with open(df1_txt) as file: 
@@ -141,43 +141,48 @@ try:
       x_offset0 = x_op
       y_offset0 = y_op
       
+      label_cross_0 = label_cross
+      label_station_0 = label_station
       
-      if label_cross + 1 < len(cross1) and (x_vector * (cross1[label_cross+1][0] - cross1[label_cross][0]))*(y_vector * (cross1[label_cross+1][1] - cross1[label_cross][1])) >= 0:
+      m_txt2.write(str(x_vector) + " " + str(y_vector)+ "\n") 
+      
+      
+      if label_cross + 1 < len(cross1) and (x_vector * (cross1[label_cross+1][0] - cross1[label_cross][0]))>= 0 and (y_vector * (cross1[label_cross+1][1] - cross1[label_cross][1])) >= 0:
        while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross+1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross+1][1] + y_offset) , 2)):
          label_cross += 1
          
        if label_cross + 1 < len(cross1):  
-         if (x_op - (cross1[label_cross][0] + x_offset))*(cross1[label_cross+1][0] - cross1[label_cross][0]) >= 0 and (y_op - (cross1[label_cross][1] + y_offset))*(cross1[label_cross+1][1] - cross1[label_cross][1]) >= 0:
+         if (x_op - (cross1[label_cross][0] + x_offset))* x_vector >= 0 and (y_op - (cross1[label_cross][1] + y_offset))* y_vector >= 0:
           label_cross += 1
 
 
-      if label_cross - 1 >= 0 and (x_vector * (cross1[label_cross-1][0] - cross1[label_cross][0]))*(y_vector * (cross1[label_cross-1][1] - cross1[label_cross][1])) > 0:
+      if label_cross - 1 >= 0 and (x_vector * (cross1[label_cross-1][0] - cross1[label_cross][0])) >= 0 and (y_vector * (cross1[label_cross-1][1] - cross1[label_cross][1])) >= 0:
        while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross-1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross-1][1] + y_offset) , 2)):
          label_cross -= 1 
          
        if label_cross - 1 >= 0:  
-         if (x_op - (cross1[label_cross][0] + x_offset))*(cross1[label_cross-1][0] - cross1[label_cross][0]) >= 0 and (y_op - (cross1[label_cross][1] + y_offset))*(cross1[label_cross-1][1] - cross1[label_cross][1]) >= 0:
+         if (x_op - (cross1[label_cross][0] + x_offset))* x_vector >= 0 and (y_op - (cross1[label_cross][1] + y_offset))* y_vector >= 0:
           label_cross -= 1
          
          
          
                                
-      if label_station + 1 < len(station1) and (x_vector * (station1[label_station+1][0] - station1[label_station][0]))*(y_vector * (station1[label_station+1][1] - station1[label_station][1])) >= 0:
+      if label_station + 1 < len(station1) and (x_vector * (station1[label_station+1][0] - station1[label_station][0])) >= 0 and (y_vector * (station1[label_station+1][1] - station1[label_station][1])) >= 0:
        while math.sqrt(math.pow(x_op - ( station1[label_station][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station+1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station+1][1] + y_offset), 2)):
          label_station += 1
          
        if label_station + 1 < len(station1):  
-         if (x_op - (station1[label_station][0] + x_offset))*(station1[label_station+1][0] - station1[label_station][0]) >= 0 and (y_op - (station1[label_station][1] + y_offset))*(station1[label_station+1][1] - station1[label_station][1]) >= 0:
+         if (x_op - (station1[label_station][0] + x_offset))* x_vector >= 0 and (y_op - (station1[label_station][1] + y_offset))* y_vector >= 0:
           label_station += 1
 
                       
          
-      if label_station - 1 >= 0 and (x_vector * (station1[label_station-1][0] - station1[label_station][0]))*(y_vector * (station1[label_station-1][1] - station1[label_station][1])) > 0:
+      if label_station - 1 >= 0 and (x_vector * (station1[label_station-1][0] - station1[label_station][0])) >= 0 and (y_vector * (station1[label_station-1][1] - station1[label_station][1])) >= 0:
        while math.sqrt(math.pow(x_op - (station1[label_station][0] + x_offset), 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station-1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station-1][1] + y_offset), 2)):
          label_station -= 1
          
        if label_station - 1 >= 0:  
-         if (x_op - (station1[label_station][0] + x_offset))*(station1[label_station-1][0] - station1[label_station][0]) >= 0 and (y_op - (station1[label_station][1] + y_offset))*(station1[label_station-1][1] - station1[label_station][1]) >= 0:
+         if (x_op - (station1[label_station][0] + x_offset))* x_vector >= 0 and (y_op - (station1[label_station][1] + y_offset))* y_vector >= 0:
           label_station -= 1          
          
                     
@@ -185,15 +190,29 @@ try:
       data_f = label_cross + 1
       data_g = label_station + 1
       data_h = label_station + 1
-        
-      write_m = str(x_op) + "," + str(y_op) + "," + str(s_limit) + "," + str(sum_d) + "," + str(data_e) + "," + str(data_f) + "," + str(data_g) + "," + str(data_h) + "\n"
+      
+      cross_x = ""
+      cross_y = ""
+      station_x = ""
+      station_y = ""
+      
+      
+      if label_cross_0 != label_cross:
+       cross_x = str(cross1[label_cross][0] + x_offset)
+       cross_y = str(cross1[label_cross][1] + y_offset)
+      
+      if label_station_0 != label_station:
+       station_x = str(station1[label_station_0][0] + x_offset)
+       station_y = str(station1[label_station_0][1] + y_offset)
+      
+          
+      write_m = str(x_op) + "," + str(y_op) + "," + str(s_limit) + "," + str(sum_d) + "," + str(data_e) + "," + str(data_f) + "," + str(data_g) + "," + str(data_h) + "," + str(cross_x) + "," + str(cross_y) + "," + str(station_x) + "," + str(station_y) + "\n"
       m_txt.write(write_m)
       
        
-     except:
-          
+     except:         
       if len(line) > 0:
-       m_txt.write(line)
+       m_txt.write(str(line[0:len(line) - 1]) + str("," + "cross_x" + "," + "cross_y" + "," + "station_x" + "," + "station_y" + "\n"))
 
 except:
  print("error in " + df1_txt)
@@ -201,8 +220,11 @@ except:
 
 
 m_txt.close()
-df2_2 = pd.read_csv(make_txt,sep=",",encoding='utf-8')
+df2_2 = pd.read_csv(make_txt,sep=",",encoding='utf-8', low_memory=False)
 df2_2.to_excel('new_direct.xlsx',index=False)
+
+
+m_txt2.close()
 
 
 
@@ -211,40 +233,6 @@ df2_2.to_excel('new_direct.xlsx',index=False)
 #txt1 = open(df1_txt, 'a')
 #txt2 = open(df2_txt, 'a')
 #txt3 = open(df3_txt, 'a')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
