@@ -25,6 +25,8 @@
 * confi_chart.py : class 별 confidence를 excel로 변환하여 chart로 나타낼 수 있도록 해준다
 * ch_name.py : dataset의 이름을 바꾸어야 할때 쓰인다
 * excel_logging.py : brt 데이터 로깅 프로그램
+* crawling2.py : crawling 개선 프로그램
+
 # yolo_scan_algorithm
 
 # 구현 순서
