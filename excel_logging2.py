@@ -41,6 +41,9 @@ label_cross = 0
 global label_station
 label_station = 0
 
+global count_station
+count_station = False
+
 
 global sum_d
 sum_d = 0
@@ -68,8 +71,8 @@ def sca_p2(a_x, b_x,a_y,b_y):
 
 df0 = pd.read_excel(original_file,sheet_name=0)
 df1 = pd.read_excel(original_file,sheet_name=1)
-df2 = pd.read_excel(original_file,sheet_name=2)
-df3 = pd.read_excel(original_file,sheet_name=3)
+df2 = pd.read_excel(original_file,sheet_name=3)
+df3 = pd.read_excel(original_file,sheet_name=4)
 
 
 df0.to_csv(df0_txt,index= False)
@@ -103,7 +106,7 @@ try:
     for line in file.readlines():
      try:
       data_list = line.split(',')
-      cross1.append([float(data_list[2]) + x_offset,float(data_list[3]) + y_offset])
+      cross1.append([float(data_list[2]) + x_offset,float(data_list[3]) + y_offset, int(data_list[1])])
      except:
       continue
     
@@ -130,7 +133,6 @@ except:
   
 print("Station size is " + str(len(station1)))
 
- 
  
 
 m_txt = open(make_txt, 'w+')
@@ -163,34 +165,27 @@ try:
       label_station_0 = label_station
       
       #m_txt2.write(str(x_vector) + " " + str(y_vector)+ "\n") 
-      
-      
+            
       if label_cross + 1 < len(cross1): 
        while dia(x_op,cross1[label_cross+1][0],y_op,cross1[label_cross+1][1]) < dia(x_op,cross1[label_cross][0],y_op,cross1[label_cross][1]): 
         label_cross += 1
         
-       if label_cross + 1 < len(cross1):  
-        if (cross1[label_cross+1][0] - x_op)* (cross1[label_cross][0] - x_op)  + (cross1[label_cross+1][1] - y_op)* (cross1[label_cross][1] - y_op) >= 0:
-         label_cross += 1
+        if sca_p2(x_op - (cross1[label_cross][0]),(cross1[label_cross + 1][0] - cross1[label_cross][0]),(y_op - (cross1[label_cross][1])),((cross1[label_cross + 1][1]) - cross1[label_cross][1])):
+         label_cross += 1     
        
-        
-      if label_station + 1 < len(station1): 
+                 
+      if label_station + 1 < len(station1) : 
        while dia(x_op,station1[label_station+1][0],y_op,station1[label_station+1][1]) < dia(x_op,station1[label_station][0],y_op,station1[label_station][1]): 
         label_station += 1
-        
- 
-       if sca_p((x_op - (station1[label_station][0])),((station1[label_station + 1][0]) - x_op),(y_op - (station1[label_station][1])),((station1[label_station + 1][1]) - y_op)):
-        label_station += 1    
+               
+       if sca_p2(x_op - (station1[label_station][0]),(station1[label_station + 1][0] - station1[label_station][0]),(y_op - (station1[label_station][1])),((station1[label_station + 1][1]) - station1[label_station][1])):
+        label_station += 1     
        
-       #elif sca_p(x_vector, station1[label_station + 1][1] - x_op, y_vector, station1[label_station + 1][1] - x_op):
-        #label_station += 1
-  
-  
-                    
-      data_e = label_cross
+                      
+      data_e = label_station
       data_f = label_cross
-      data_g = label_station
-      data_h = label_station
+      data_g = cross1[label_cross][2]
+      #data_h = label_station
       
       cross_x = ""
       cross_y = ""
@@ -207,7 +202,7 @@ try:
        station_y = str(station1[label_station_0][1])
       
           
-      write_m = str(x_op) + "," + str(y_op) + "," + str(s_limit) + "," + str(sum_d) + "," + str(data_e) + "," + str(data_f) + "," + str(data_g) + "," + str(data_h) + "," + str(cross_x) + "," + str(cross_y) + "," + str(station_x) + "," + str(station_y) + "\n"
+      write_m = str(x_op) + "," + str(y_op) + "," + str(s_limit) + "," + str(sum_d) + "," + str(data_e) + "," + str(data_f) + "," + str(data_g) + "," + str(cross_x) + "," + str(cross_y) + "," + str(station_x) + "," + str(station_y) + "\n"
       m_txt.write(write_m)
       m_txt2.write(str(data_g)+ "\n") 
       
