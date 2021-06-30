@@ -41,11 +41,32 @@ label_cross = 0
 global label_station
 label_station = 0
 
+global count_station
+count_station = False
+
 
 global sum_d
 sum_d = 0
 
 ###########################
+
+
+def dia(a_x, b_x, a_y,b_y):
+ return math.sqrt(math.pow(a_x - b_x , 2) + math.pow(a_y - b_y , 2))
+
+def sca_p(a_x, b_x,a_y,b_y):
+ if a_x * b_x >= 0 and a_y * b_y >= 0:
+  return True
+
+ else:
+  return False
+  
+def sca_p2(a_x, b_x,a_y,b_y):
+ if a_x * b_x + a_y * b_y >= 0:
+  return True
+
+ else:
+  return False  
 
 
 df0 = pd.read_excel(original_file,sheet_name=0)
@@ -85,7 +106,7 @@ try:
     for line in file.readlines():
      try:
       data_list = line.split(',')
-      cross1.append([float(data_list[2]),float(data_list[3])])
+      cross1.append([float(data_list[2]) + x_offset,float(data_list[3]) + y_offset])
      except:
       continue
     
@@ -102,7 +123,7 @@ try:
     for line in file.readlines():
      try:
       data_list = line.split(',')
-      station1.append([float(data_list[3]),float(data_list[4])])
+      station1.append([float(data_list[3]) + x_offset,float(data_list[4]) + y_offset])
      except:
       continue
     
@@ -112,7 +133,6 @@ except:
   
 print("Station size is " + str(len(station1)))
 
- 
  
 
 m_txt = open(make_txt, 'w+')
@@ -144,52 +164,28 @@ try:
       label_cross_0 = label_cross
       label_station_0 = label_station
       
-      m_txt2.write(str(x_vector) + " " + str(y_vector)+ "\n") 
-      
-      
-      if label_cross + 1 < len(cross1) and (x_vector * (cross1[label_cross+1][0] - cross1[label_cross][0]))>= 0 and (y_vector * (cross1[label_cross+1][1] - cross1[label_cross][1])) >= 0:
-       while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross+1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross+1][1] + y_offset) , 2)):
-         label_cross += 1
-         
-       if label_cross + 1 < len(cross1):  
-         if (x_op - (cross1[label_cross][0] + x_offset))* x_vector >= 0 and (y_op - (cross1[label_cross][1] + y_offset))* y_vector >= 0:
-          label_cross += 1
-
-
-      if label_cross - 1 >= 0 and (x_vector * (cross1[label_cross-1][0] - cross1[label_cross][0])) >= 0 and (y_vector * (cross1[label_cross-1][1] - cross1[label_cross][1])) >= 0:
-       while math.sqrt(math.pow(x_op - (cross1[label_cross][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (cross1[label_cross-1][0] + x_offset) , 2) + math.pow(y_op - (cross1[label_cross-1][1] + y_offset) , 2)):
-         label_cross -= 1 
-         
-       if label_cross - 1 >= 0:  
-         if (x_op - (cross1[label_cross][0] + x_offset))* x_vector >= 0 and (y_op - (cross1[label_cross][1] + y_offset))* y_vector >= 0:
-          label_cross -= 1
-         
-         
-         
-                               
-      if label_station + 1 < len(station1) and (x_vector * (station1[label_station+1][0] - station1[label_station][0])) >= 0 and (y_vector * (station1[label_station+1][1] - station1[label_station][1])) >= 0:
-       while math.sqrt(math.pow(x_op - ( station1[label_station][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station+1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station+1][1] + y_offset), 2)):
-         label_station += 1
-         
-       if label_station + 1 < len(station1):  
-         if (x_op - (station1[label_station][0] + x_offset))* x_vector >= 0 and (y_op - (station1[label_station][1] + y_offset))* y_vector >= 0:
-          label_station += 1
-
+      #m_txt2.write(str(x_vector) + " " + str(y_vector)+ "\n") 
+            
+      if label_cross + 1 < len(cross1): 
+       while dia(x_op,cross1[label_cross+1][0],y_op,cross1[label_cross+1][1]) < dia(x_op,cross1[label_cross][0],y_op,cross1[label_cross][1]): 
+        label_cross += 1
+        
+        if sca_p2(x_op - (cross1[label_cross][0]),(cross1[label_cross + 1][0] - cross1[label_cross][0]),(y_op - (cross1[label_cross][1])),((cross1[label_cross + 1][1]) - cross1[label_cross][1])):
+         label_cross += 1     
+       
+                 
+      if label_station + 1 < len(station1) : 
+       while dia(x_op,station1[label_station+1][0],y_op,station1[label_station+1][1]) < dia(x_op,station1[label_station][0],y_op,station1[label_station][1]): 
+        label_station += 1
+               
+       if sca_p2(x_op - (station1[label_station][0]),(station1[label_station + 1][0] - station1[label_station][0]),(y_op - (station1[label_station][1])),((station1[label_station + 1][1]) - station1[label_station][1])):
+        label_station += 1     
+       
                       
-         
-      if label_station - 1 >= 0 and (x_vector * (station1[label_station-1][0] - station1[label_station][0])) >= 0 and (y_vector * (station1[label_station-1][1] - station1[label_station][1])) >= 0:
-       while math.sqrt(math.pow(x_op - (station1[label_station][0] + x_offset), 2) + math.pow(y_op - (station1[label_station][1] + y_offset) , 2)) >= math.sqrt(math.pow(x_op - (station1[label_station-1][0] + x_offset) , 2) + math.pow(y_op - (station1[label_station-1][1] + y_offset), 2)):
-         label_station -= 1
-         
-       if label_station - 1 >= 0:  
-         if (x_op - (station1[label_station][0] + x_offset))* x_vector >= 0 and (y_op - (station1[label_station][1] + y_offset))* y_vector >= 0:
-          label_station -= 1          
-         
-                    
-      data_e = label_cross + 1
-      data_f = label_cross + 1
-      data_g = label_station + 1
-      data_h = label_station + 1
+      data_e = label_cross
+      data_f = label_cross
+      data_g = label_station
+      data_h = label_station
       
       cross_x = ""
       cross_y = ""
@@ -198,16 +194,17 @@ try:
       
       
       if label_cross_0 != label_cross:
-       cross_x = str(cross1[label_cross][0] + x_offset)
-       cross_y = str(cross1[label_cross][1] + y_offset)
+       cross_x = str(cross1[label_cross][0])
+       cross_y = str(cross1[label_cross][1])
       
       if label_station_0 != label_station:
-       station_x = str(station1[label_station_0][0] + x_offset)
-       station_y = str(station1[label_station_0][1] + y_offset)
+       station_x = str(station1[label_station_0][0])
+       station_y = str(station1[label_station_0][1])
       
           
       write_m = str(x_op) + "," + str(y_op) + "," + str(s_limit) + "," + str(sum_d) + "," + str(data_e) + "," + str(data_f) + "," + str(data_g) + "," + str(data_h) + "," + str(cross_x) + "," + str(cross_y) + "," + str(station_x) + "," + str(station_y) + "\n"
       m_txt.write(write_m)
+      m_txt2.write(str(data_g)+ "\n") 
       
        
      except:         
