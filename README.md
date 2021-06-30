@@ -2,6 +2,6 @@
 
 
 
-colcon build
-source install/setup.bash
-ros2 run direct_data data_a
+* colcon build
+* source install/setup.bash
+* ros2 run direct_data data_a
