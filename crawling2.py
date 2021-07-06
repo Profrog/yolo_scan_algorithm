@@ -1,3 +1,8 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+import urllib.request
+import imghdr
 from PIL import Image
 import os
 import time
@@ -33,93 +38,70 @@ if os.path.exists(file_name):
 os.makedirs(file_name)
 
 
-def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_between_interactions:int=1):
-    def scroll_to_end(wd):
-        wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(sleep_between_interactions)    
-    
-    # build the google query
-    search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
 
-    # load the page
-    wd.get(search_url.format(q=query))
-
-    image_urls = set()
-    image_count = 0
-    results_start = 0
-    while image_count < max_links_to_fetch:
-        scroll_to_end(wd)
-
-        # get all image thumbnail results
-        thumbnail_results = wd.find_elements_by_css_selector("img.Q4LuWd")
-        number_results = len(thumbnail_results)
-        
-        print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
-        
-        for img in thumbnail_results[results_start:number_results]:
-            # try to click every thumbnail such that we can get the real image behind it
-            try:
-                img.click()
-                time.sleep(sleep_between_interactions)
-            except Exception:
-                continue
-
-            # extract image urls    
-            actual_images = wd.find_elements_by_css_selector('img.n3VNCb')
-            for actual_image in actual_images:
-                if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
-                    image_urls.add(actual_image.get_attribute('src'))
-                    data3.write(str(actual_image.get_attribute('src')) + "\n")
-
-            image_count = len(image_urls)
-
-            if len(image_urls) >= max_links_to_fetch:
-                print(f"Found: {len(image_urls)} image links, done!")
-                break
-        else:
-            print("Found:", len(image_urls), "image links, looking for more ...")
-            time.sleep(30)
-            return
-            load_more_button = wd.find_element_by_css_selector(".mye4qd")
-            if load_more_button:
-                wd.execute_script("document.querySelector('.mye4qd').click();")
-
-        # move the result startpoint further down
-        results_start = len(thumbnail_results)
-    
-    wd.close()
-    return image_urls
-    
-    
 print("검색할 커맨드를 입력하시오")
 search1 = input()    
     
 print("몇 개를 검색하시겠습니까")
 n = int(input())   
 
+driver = webdriver.Chrome()
+driver.get("https://www.google.co.kr/imghp?hl=ko&tab=wi&ogbl") #구글에 이미지탭 URL 주소
+elem = driver.find_element_by_name("q")#검색창 태그찾기
+elem.send_keys(search1)#찾은 검색창에 찾고 싶은 키워드 입력
+elem.send_keys(Keys.RETURN)#입력받은 키를 누른다
+SCROLL_PAUSE_TIME = 1
 
-driver = webdriver.Chrome()    
-fetch_image_urls(search1, n, driver, 1)
-data3.close()
+
+last_height = driver.execute_script("return document.body.scrollHeight")#스크롤 높이 가져옴
+count = 1
+while count < n:
+
+# 끝까지 스크롤 다운
+ driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+# 1초 대기를 해야 막힘없이 동작한다.
+ time.sleep(SCROLL_PAUSE_TIME)
+
+# 스크롤 다운 후 스크롤 높이 다시 가져옴
+ new_height = driver.execute_script("return document.body.scrollHeight")
+ if new_height == last_height:
+    try:
+        driver.find_element_by_css_Selector(".mye4qd").click #첫번째 큰 이미지를 클릭한다.
+    except:
+        break
+ last_height = new_height
+ images = driver.find_elements_by_css_selector(".rg_i.Q4LuWd") #이미지를 눌렀을때 나오는 큰 이미지의 태그를 찾는다.
  
+ for image in images:
+    try:
+        if count > n:
+         break
+        print(count)
+        count = count + 1
+        image.click()
+        #time.sleep(2)
+        imgURL = image.get_attribute("src")# 찾은 이미지의 FullxPath를 복사 붙여넣어서 다운로드              
+        #print(imgURL)
+        urllib.request.urlretrieve(imgURL, file_name + "/" + image_name + str(count))
+        os.rename(file_name + "/" + image_name + str(count), file_name + "/" + image_name + str(count) + "." + str(imghdr.what(file_name + "/" + image_name + str(count))))
+        
+        
+        
+    except:
+        print("error")
+        
+        
+        
+               
+#driver.close()        
+        
+        
+        
+        
+        
+        
+        
+        
 
-    
-i = 1
-
-while i <= n:
- with open('crol.txt') as file:
-  for line in file.readlines():
-   try:    
-    urllib.request.urlretrieve(line, file_name + "/" + image_name + str(i) + '.jpg')
-    i+=1
-    
-    if i > n:
-     break
-    
-   except: 
-    print("Error is" + line + "\n")
-  
-  if i <= n: 
-   fetch_image_urls(search1 + " pic " + str(i), n-i, driver, 1)   
-    
-    
+driver.close()
