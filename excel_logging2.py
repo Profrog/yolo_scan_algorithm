@@ -71,6 +71,7 @@ def sca_p2(a_x, b_x,a_y,b_y):
 
 df0 = pd.read_excel(original_file,sheet_name=0)
 df1 = pd.read_excel(original_file,sheet_name=1)
+df2_0 = pd.read_excel(original_file,sheet_name=2)
 df2 = pd.read_excel(original_file,sheet_name=3)
 df3 = pd.read_excel(original_file,sheet_name=4)
 
@@ -170,21 +171,28 @@ try:
        while dia(x_op,cross1[label_cross+1][0],y_op,cross1[label_cross+1][1]) < dia(x_op,cross1[label_cross][0],y_op,cross1[label_cross][1]): 
         label_cross += 1
         
-        if sca_p2(x_op - (cross1[label_cross][0]),(cross1[label_cross + 1][0] - cross1[label_cross][0]),(y_op - (cross1[label_cross][1])),((cross1[label_cross + 1][1]) - cross1[label_cross][1])):
-         label_cross += 1     
-       
-                 
+       #if sca_p2(x_op - (cross1[label_cross][0]),(cross1[label_cross + 1][0] - cross1[label_cross][0]) ,(y_op - (cross1[label_cross][1])),((cross1[label_cross + 1][1]) - cross1[label_cross][1])):
+         #label_cross += 1
+         
+       if dia(x_op,cross1[label_cross][0],y_op,cross1[label_cross][1]) < 10:
+        label_cross += 1  
+               
+                             
       if label_station + 1 < len(station1) : 
        while dia(x_op,station1[label_station+1][0],y_op,station1[label_station+1][1]) < dia(x_op,station1[label_station][0],y_op,station1[label_station][1]): 
         label_station += 1
                
-       if sca_p2(x_op - (station1[label_station][0]),(station1[label_station + 1][0] - station1[label_station][0]),(y_op - (station1[label_station][1])),((station1[label_station + 1][1]) - station1[label_station][1])):
-        label_station += 1     
+       #if sca_p2(x_op - (station1[label_station][0]),(station1[label_station + 1][0] - station1[label_station][0]),(y_op - (station1[label_station][1])),((station1[label_station + 1][1]) - station1[label_station][1])):
+        #label_station += 1
+       if dia(x_op,station1[label_station][0],y_op,station1[label_station][1]) < 10:
+        label_station += 1   
+        
+             
        
                       
-      data_e = label_station
-      data_f = label_cross
-      data_g = cross1[label_cross][2]
+      data_e = label_station + 1
+      data_f = label_cross + 1
+      data_g = cross1[label_cross+1][2]
       #data_h = label_station
       
       cross_x = ""
@@ -217,9 +225,16 @@ except:
 
 
 m_txt.close()
-df2_2 = pd.read_csv(make_txt,sep=",",encoding='utf-8', low_memory=False)
-df2_2.to_excel('new_direct.xlsx',index=False)
+df1_2 = pd.read_csv(make_txt,sep=",",encoding='utf-8', low_memory=False)
+#df1_2.to_excel('new_direct.xlsx',index=False)
 
+with pd.ExcelWriter('new_direct.xlsx',index=False) as writer:
+ df0.to_excel(writer,sheet_name = 'config',index=False)
+ df1_2.to_excel(writer,sheet_name = '경로',index=False)
+ df2_0.to_excel(writer,sheet_name = '교차로정보',index=False)
+ df2.to_excel(writer,sheet_name = '교차로',index=False)
+ df3.to_excel(writer,sheet_name = '정거장정보',index=False)
+ 
 
 m_txt2.close()
 
