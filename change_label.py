@@ -20,11 +20,15 @@ import sys
 
 
 
+global name
+name = "t_image"
+
+
 global path
-path = "working1/"
+path = name + "/"
 
 global search1
-search1 = "working1a"
+search1 = name + "_for all dataset"
 
 
 global dir_weights
@@ -68,12 +72,12 @@ print ("file_list: {}".format(file_list_py))
 for test1 in file_list_py:
   with open(path + test1) as file:
    if True:
-    label_dir = path + test1
     wr1 = open(search1 + "/" + test1, 'w+')
     for line in file.readlines():
      label_line = line.split(" ")
      if str(label_line[0]) == str(o1):
       search_num += 1
+      label_dir = path + test1
       wr1_sen = line
       wr1_sen = wr1_sen.replace(str(o1),str(n1))
       wr1.write(wr1_sen)
@@ -83,8 +87,15 @@ for test1 in file_list_py:
       wr1.write(line) 
            
      #print("find label " + str(search_num) + "\n")
-     shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpg", search1)    
-    
+     try:
+      shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpg", search1)
+      
+     except:     
+      try:
+       shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpeg", search1)
+       
+      except: 
+       shutil.copy(label_dir[0:len(label_dir) -4]  + ".png", search1)
    #except:   
     #print("error in " + test1 + "\n")  
     #continue  
