@@ -79,7 +79,7 @@ for test1 in file_list_py:
       search_num += 1
       label_dir = path + test1
       wr1_sen = line
-      wr1_sen = wr1_sen.replace(str(o1),str(n1))
+      wr1_sen = wr1_sen.replace(str(o1),str(n1),1)
       wr1.write(wr1_sen)
       #print(wr1_sen)
       
