@@ -27,6 +27,7 @@
 * excel_logging.py : brt 데이터 로깅 프로그램
 * crawling2.py : crawling 개선 프로그램
 * makeset2.py : makeset.py를 다른 포멧에 대해서도 가능하게 한 코드
+* convert_web.py : web 데이터 convert 하는 코드
 
 # yolo_scan_algorithm
 
