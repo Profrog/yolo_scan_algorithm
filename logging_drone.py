@@ -13,6 +13,16 @@ import re
 # 로그 .txt 파일의 이름을 input.txt로 변형합니다
 # linux 명령어 창에서 "python3 convert.py" 명령어를 통하여 본 프로그램을 실행하면 "output.txt"에 정리되어 나옵니다
 
+global pos_x
+pos_x = 0.0
+
+global pos_y
+pos_y = 0.0
+
+global pos_z
+pos_z = 0.0
+
+
 global tag1
 tag1 = "DE"
 
@@ -107,8 +117,18 @@ while string0:
   liney = re.findall(r'(?<!\.)[-+]?\b\d+\.\d+(?!\.)\b', stringy)
   linez = re.findall(r'(?<!\.)[-+]?\b\d+\.\d+(?!\.)\b', stringz)
   line_rssi = re.findall(r'(?<!\.)[-+]?\b\d+\.\d+(?!\.)\b', string_rssi)
-   
-  output = str(string_at) + " " + str(linex)[2:len(str(linex)) - 2] + " " + str(liney)[2:len(str(liney)) - 2] + " " + str(linez)[2:len(str(linez)) - 2]  + " " +  str(line_rssi)[2:len(str(line_rssi)) - 2]  +  "\n"   
+  
+  
+  if len(str(linex)) > 0:
+   pos_x = float(str(linex)[2:len(str(linex)) - 2])
+  
+  if len(str(liney)) > 0:
+   pos_y = float(str(liney)[2:len(str(liney)) - 2])
+  
+  if len(str(linez)) > 0:
+   pos_z = float(str(linez)[2:len(str(linez)) - 2])
+     
+  output = str(string_at) + " " + str(pos_x) + " " + str(pos_y) + " " + str(pos_z)  + " " +  str(line_rssi)[2:len(str(line_rssi)) - 2]  +  "\n"   
   data4.write(output)
   data4.close()
 
