@@ -21,25 +21,25 @@ import sys
 
 
 global path
-path = "t_image/"
+path = "cam_train/"
 
 global search1
 search1 = "working2"
 
 
 global dir_weights
-dir_weights = 'yolov4.weights'
+dir_weights = 'weights/working2.weights'
 
 
 global dir_cfg 
 dir_cfg = 'cfg/yolov4.cfg'
 
 global dir_coco
-dir_coco = 'cfg/coco.names'
+dir_coco = 'cfg/working2.names'
 
 
 global name_file
-name_file = 'cfg/classes.txt'
+name_file = 'cfg/custom.txt'
 
 
 
@@ -84,7 +84,7 @@ def yolo(label_a, original_image):
            confidence = scores[class_id]
            #print(str(detection))
            
-           if confidence > 0.5:           
+           if confidence > 0.7:           
             # Object detected
             center_x = int(detection[0] * width)
             center_y = int(detection[1] * height)
@@ -147,13 +147,26 @@ for test1 in file_list_py:
      #print(label_dir[0:len(label_dir) -4] + "\n")
      
      label_t = search1 + "/" + test1
-     original_image = label_dir[0:len(label_dir) -4]  + ".jpg" 
-     shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpg", search1)
+     
+     try:
+      original_image = label_dir[0:len(label_dir) -4]  + ".jpg" 
+      shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpg", search1)
+     except:
+      try: 
+       original_image = label_dir[0:len(label_dir) -4]  + ".jpeg" 
+       shutil.copy(label_dir[0:len(label_dir) -4]  + ".jpeg", search1)
+      except: 
+       original_image = label_dir[0:len(label_dir) -4]  + ".png" 
+       shutil.copy(label_dir[0:len(label_dir) -4]  + ".png", search1)
+     
+     
      yolo(label_t,original_image)
              
  except:   
   print("error in " + test1 + "\n")  
   continue
+
+
 
 
 write_data = search1 + ".txt"  
@@ -162,10 +175,3 @@ file_list2 = os.listdir(search1 + "/")
 file_list_py2 = [file for file in file_list2 if file.endswith(".txt")]  
 print("all data_num is " + str(len(file_list_py2)) + "\n")   
 filea.write("all data_num is " + str(len(file_list_py2)) + "\n")  
-  
-  
-  
-  
-  
-  
-    
