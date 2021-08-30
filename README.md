@@ -29,6 +29,7 @@
 * makeset2.py : makeset.py를 다른 포멧에 대해서도 가능하게 한 코드
 * convert_web.py : web 데이터 convert 하는 코드
 * logging_drone : 드론 데이터 로깅 파싱
+* autolabel.py : 라벨링 자동 프로그램
 
 # yolo_scan_algorithm
 
