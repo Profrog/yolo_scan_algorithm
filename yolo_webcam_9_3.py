@@ -33,7 +33,7 @@ attached = 0
 before = 0
 left_bound = 0
 right_bound = 0
-fishbowlsize = 1
+fishbowlsize = 0.25
 bowl_left = 0
 bowl_right = 0
 isDragging = False
@@ -45,8 +45,8 @@ right_frame = 0
 ##############333
 
 # vc0 = cv2.VideoCapture(0)
-#vc = cv2.VideoCapture(0) # 0은 노트북 웹캠 2는 usb로 연결된 웹캠
-vc = cv2.VideoCapture('/home/kjjgo35/PythonHome/darknet/test.mkv')
+vc = cv2.VideoCapture(2) # 0은 노트북 웹캠 2는 usb로 연결된 웹캠
+#vc = cv2.VideoCapture('/home/kjjgo35/PythonHome/darknet/test.mkv')
 
 
 global data
@@ -99,7 +99,7 @@ def onMouse(event, x, y, flags, param):
 
 def checkbound(label,xs, xe):
      
-     if(label != "car"):
+     if(label != "zebra fish"):
       print("other object")
       return False
 
@@ -224,8 +224,8 @@ while True :
               label = str(classes[class_ids[i]])
               color = colors[i]
               cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-              #cv2.putText(image, label, (x, y + 30), font, 3, color, 3)
-              cv2.putText(image, distance , (x, y + 30), font, 3, color, 3)
+              cv2.putText(image, label, (x, y + 30), font, 3, color, 3)
+              cv2.putText(image, distance , (x, y - 30), font, 3, color, 3)
               cv2.imshow("Image", image)
               if checkbound(label,x,x+w):
                 attached += 1
