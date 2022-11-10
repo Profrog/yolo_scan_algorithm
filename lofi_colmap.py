@@ -4,6 +4,7 @@ import numpy as np
 import open3d as o3d
 import shutil
 
+
 def colmap0():
 	start0 = time.time()
 	
@@ -25,12 +26,17 @@ def colmap0():
 	 shutil.rmtree(dir00) 
 	  
 	os.makedirs(dir00)
-	os.remove('database.db')
+	
+	
+	dir00 = 'database.db'
+	
+	if os.path.isfile(dir00):	
+	 os.remove(dir00)
 	
 	time.sleep(0.5)
 			
 	start0 = time.time()
-	str0 = "/home/mingyu/colmap_test2"
+	str0 = "/home/mingyu/lofi"
 
 	str1 = "colmap feature_extractor \
    --database_path " + str0 + "/database.db \
